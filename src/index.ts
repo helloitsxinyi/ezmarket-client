@@ -13,13 +13,13 @@ app.addApp(new EzCors());
 //---Plugins---
 
 //Models are also ezapps in ezbackend
-const model = new EzModel("Listing", {
+const model = new EzModel("Items", {
   shopName: Type.VARCHAR,
   itemName: Type.VARCHAR,
   price: Type.DOUBLE,
   available: Type.BOOL,
 });
 
-app.addApp(model, { prefix: "model-route-prefix" });
+app.addApp(model, { prefix: "/items" });
 
 app.start();
