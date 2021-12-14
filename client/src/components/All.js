@@ -9,10 +9,13 @@ export default function All() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    ItemDataService.retrieve("http://localhost:8000/items").then((data) => {
-      setItems(data);
-    });
-    console.log("helloi", items);
+    ItemDataService.retrieve("http://localhost:8000/items")
+      .then((data) => {
+        setItems(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (
