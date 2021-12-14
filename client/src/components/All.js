@@ -1,9 +1,38 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
+import Carousel from "react-bootstrap/Carousel";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import ItemDataService from "../services/ItemDataService";
+import Item from "./Item";
 
-export class All extends Component {
-  render() {
-    return <div></div>;
-  }
+export default function All() {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    ItemDataService.retrieve("http://localhost:8000/items").then((data) => {
+      setItems(data);
+    });
+    console.log("helloi", items);
+  }, []);
+
+  return (
+    <div style={{ height: "90vh" }}>
+      <Container>
+        <Carousel fade>
+          {items.map((item, index) => (
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src="https://picsum.photos/400/190"
+                alt="slide"
+              />
+              <Carousel.Caption>
+                <Item item={item} key={index} />
+              </Carousel.Caption>
+            </Carousel.Item>
+          ))}
+        </Carousel>
+      </Container>
+    </div>
+  );
 }
-
-export default All;
