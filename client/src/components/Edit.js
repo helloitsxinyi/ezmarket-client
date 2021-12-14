@@ -23,6 +23,7 @@ function Edit(props) {
   }, [id]);
 
   return (
+    // TODO: fix placement of card
     <Container className="d-flex vh-100">
       <Row className="m-auto align-self-center">
         <Col>

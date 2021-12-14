@@ -19,14 +19,14 @@ export default function All() {
   }, []);
 
   return (
-    <div style={{ height: "90vh" }}>
+    <div style={{ marginTop: 50 }}>
       <Container>
         <Carousel fade>
           {items.map((item, index) => (
             <Carousel.Item>
               <img
                 className="d-block w-100"
-                src="https://picsum.photos/400/190"
+                src="https://picsum.photos/400/150"
                 alt="slide"
               />
               <Carousel.Caption>
