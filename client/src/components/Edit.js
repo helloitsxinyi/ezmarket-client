@@ -43,7 +43,6 @@ function Edit(props) {
                 Editing {item.itemName} from {item.shopName}
               </Card.Title>
               {/* TODO: align text to left */}
-              {/* TODO: fix bug here, Card.Text is classified as p while Form Group is classified as div */}
               <Card.Header className="align-left">
                 <Form.Group as={Row} className="mb-3" controlId="shopName">
                   <Form.Label column sm={3}>
