@@ -6,11 +6,12 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import ItemDataService from "../services/ItemDataService";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 
 function Edit(props) {
   const [item, setItem] = useState({});
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     ItemDataService.retrieve(`http://localhost:8000/items/${id}`)
@@ -25,7 +26,6 @@ function Edit(props) {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setItem({ ...item, [name]: value });
-    console.log("change in item ", item);
   };
 
   const submit = () => {
@@ -33,6 +33,8 @@ function Edit(props) {
       (res) => {
         if (res.status == 200) {
           alert("Updated successfully!");
+          // TODO: implement toast to show successful update, else error
+          navigate("/");
         } else {
           alert("There was an error in your update. please try again!");
         }
@@ -112,7 +114,9 @@ function Edit(props) {
                         console.log(item.available);
                       }}
                       name="available"
-                      defaultValue={item.available ? true : false}
+                      value={
+                        item.available === true ? "available" : "unavailable"
+                      }
                       onChange={(e) => {
                         setItem({
                           ...item,
@@ -120,6 +124,7 @@ function Edit(props) {
                             e.target.value === "available" ? true : false,
                         });
                         console.log(item.available);
+                        console.log(e.target.value);
                       }}
                     >
                       <option value="available">Available</option>
@@ -144,7 +149,7 @@ function Edit(props) {
                       <Button variant="light" type="">
                         Back
                       </Button>
-                    </Link>{" "}
+                    </Link>
                   </Col>
                 </Row>
               </Card.Header>
