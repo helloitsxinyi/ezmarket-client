@@ -28,6 +28,18 @@ function Edit(props) {
     console.log("change in item ", item);
   };
 
+  const submit = () => {
+    ItemDataService.update(`http://localhost:8000/items/${id}`, item).then(
+      (res) => {
+        if (res.status == 200) {
+          alert("Updated successfully!");
+        } else {
+          alert("There was an error in your update. please try again!");
+        }
+      }
+    );
+  };
+
   return (
     // TODO: fix placement of card
     <Container className="d-flex vh-100">
@@ -110,7 +122,6 @@ function Edit(props) {
                         console.log(item.available);
                       }}
                     >
-                      {/* TODO: render first option as Avail/Unavail according to item.available */}
                       <option value="available">Available</option>
                       <option value="unavailable">Unavailable</option>
                     </Form.Select>
@@ -119,9 +130,7 @@ function Edit(props) {
                 <Row>
                   <Col>
                     {/* TODO: fix button position */}
-                    {/* TODO: implement functionality to update info (PUT) upon
-                    clicking submit */}
-                    <Button variant="primary" type="submit">
+                    <Button variant="primary" type="submit" onClick={submit}>
                       Submit
                     </Button>
                   </Col>
