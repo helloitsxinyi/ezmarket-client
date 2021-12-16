@@ -22,6 +22,12 @@ function Edit(props) {
       });
   }, [id]);
 
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setItem({ ...item, [name]: value });
+    console.log("change in item ", item);
+  };
+
   return (
     // TODO: fix placement of card
     <Container className="d-flex vh-100">
@@ -37,6 +43,7 @@ function Edit(props) {
                 Editing {item.itemName} from {item.shopName}
               </Card.Title>
               {/* TODO: align text to left */}
+              {/* TODO: fix bug here, Card.Text is classified as p while Form Group is classified as div */}
               <Card.Text className="align-left">
                 <Form.Group as={Row} className="mb-3" controlId="shopName">
                   <Form.Label column sm={3}>
@@ -46,7 +53,9 @@ function Edit(props) {
                     <Form.Control
                       type="text"
                       placeholder="Shop name"
+                      name="shopName"
                       defaultValue={item.shopName}
+                      onChange={handleInputChange}
                     />
                   </Col>
                 </Form.Group>
@@ -58,8 +67,10 @@ function Edit(props) {
                   <Col sm={8}>
                     <Form.Control
                       type="text"
+                      name="itemName"
                       placeholder="Item name"
                       defaultValue={item.itemName}
+                      onChange={handleInputChange}
                     />
                   </Col>
                 </Form.Group>
@@ -71,8 +82,10 @@ function Edit(props) {
                     <Form.Control
                       type="number"
                       step="0.01"
+                      name="price"
                       placeholder="Price"
                       defaultValue={item.price}
+                      onChange={handleInputChange}
                     />
                   </Col>
                 </Form.Group>
@@ -85,6 +98,16 @@ function Edit(props) {
                       aria-label="Select..."
                       onChange={(e) => {
                         console.log(e.target.value);
+                        console.log(item.available);
+                      }}
+                      name="available"
+                      defaultValue={item.available ? true : false}
+                      onChange={(e) => {
+                        setItem({
+                          ...item,
+                          available:
+                            e.target.value === "available" ? true : false,
+                        });
                         console.log(item.available);
                       }}
                     >
