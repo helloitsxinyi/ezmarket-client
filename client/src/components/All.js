@@ -6,10 +6,10 @@ import ItemDataService from "../services/ItemDataService";
 import Item from "./Item";
 
 export default function All() {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState([{}]);
 
   useEffect(() => {
-    ItemDataService.retrieve("http://localhost:8000/items")
+    ItemDataService.retrieve("http://localhost:8000/items/")
       .then((data) => {
         setItems(data);
       })
@@ -19,21 +19,29 @@ export default function All() {
   }, []);
 
   return (
+    // how to make error render slower/carousel run faster? hm
     <div style={{ marginTop: 50 }}>
       <Container>
         <Carousel fade>
-          {items.map((item, index) => (
-            <Carousel.Item>
-              <img
-                className="d-block w-100"
-                src="https://picsum.photos/400/150"
-                alt="slide"
-              />
-              <Carousel.Caption>
-                <Item item={item} key={index} />
-              </Carousel.Caption>
-            </Carousel.Item>
-          ))}
+          {items.length != 0 ? (
+            items.map((item, index) => (
+              <Carousel.Item key={index}>
+                <img
+                  className="d-block w-100"
+                  src="https://picsum.photos/400/150"
+                  alt="slide"
+                />
+                <Carousel.Caption>
+                  <Item item={item} key={index} />
+                </Carousel.Caption>
+              </Carousel.Item>
+            ))
+          ) : (
+            <div>
+              <h1>No items for sale now!</h1>
+              <p> Check back at another time ;-) </p>
+            </div>
+          )}
         </Carousel>
       </Container>
     </div>
