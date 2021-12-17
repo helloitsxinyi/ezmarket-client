@@ -65,38 +65,13 @@ function Edit() {
     // TODO: stack toasts
     // see: https://react-bootstrap.github.io/components/toasts/#toast-props
     <Container>
-      <Row>
-        <Col xs={6}>
-          <Toast
-            onClose={() => setShowToast(false)}
-            show={showToast}
-            delay={3000}
-            autohide
-            bg={success ? "success" : "danger"}
-            style={{ position: "absolute", right: 0 }}
-          >
-            <Toast.Header>
-              <strong className="me-auto">
-                {" "}
-                {success ? "Success" : "Error"}
-              </strong>
-            </Toast.Header>
-            <Toast.Body style={{ color: "white", textAlign: "left" }}>
-              {success
-                ? "Successfully updated!"
-                : "There was an error processing your request! Please try again."}
-            </Toast.Body>
-          </Toast>
-        </Col>
-      </Row>
-
-      {/* TODO: fix placement of card */}
-      <Container className="d-flex vh-100">
+      <Container className="d-flex">
         <Row className="m-auto align-self-center">
           <Col>
             <Card
               style={{
                 width: "35rem",
+                top: "5rem",
               }}
             >
               <Card.Body>
@@ -196,25 +171,48 @@ function Edit() {
             </Card>
           </Col>
         </Row>
-
-        <Modal show={showModal} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Confirm delete?</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            Are you sure you want to delete <b>{item.itemName} </b>from{" "}
-            <b>{item.shopName}</b>?
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Back
-            </Button>
-            <Button variant="danger" onClick={deleteItem}>
-              Yes, delete
-            </Button>
-          </Modal.Footer>
-        </Modal>
       </Container>
+      <Row>
+        <Col xs={6}>
+          <Toast
+            onClose={() => setShowToast(false)}
+            show={showToast}
+            delay={3000}
+            autohide
+            bg={success ? "success" : "danger"}
+            style={{ position: "absolute", right: "1rem", top: "1rem" }}
+          >
+            <Toast.Header>
+              <strong className="me-auto">
+                {" "}
+                {success ? "Success" : "Error"}
+              </strong>
+            </Toast.Header>
+            <Toast.Body style={{ color: "white", textAlign: "left" }}>
+              {success
+                ? "Successfully updated!"
+                : "There was an error processing your request! Please try again."}
+            </Toast.Body>
+          </Toast>
+        </Col>
+      </Row>
+      <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm delete?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to delete <b>{item.itemName} </b>from{" "}
+          <b>{item.shopName}</b>?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Back
+          </Button>
+          <Button variant="danger" onClick={deleteItem}>
+            Yes, delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 }
