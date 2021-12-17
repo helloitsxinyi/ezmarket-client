@@ -11,7 +11,8 @@ import Toast from "react-bootstrap/Toast";
 
 function Edit() {
   const [item, setItem] = useState({});
-  const [show, setShow] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+
   const [success, setSuccess] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ function Edit() {
   const submit = () => {
     ItemDataService.update(`http://localhost:8000/items/${id}`, item).then(
       (res) => {
-        setShow(true);
+        setShowToast(true);
         if (res.status === 200) {
           setSuccess(true);
         } else {
@@ -63,8 +64,8 @@ function Edit() {
       <Row>
         <Col xs={6}>
           <Toast
-            onClose={() => setShow(false)}
-            show={show}
+            onClose={() => setShowToast(false)}
+            show={showToast}
             delay={3000}
             autohide
             bg={success ? "success" : "danger"}
