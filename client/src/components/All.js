@@ -4,14 +4,17 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import ItemDataService from "../services/ItemDataService";
 import Item from "./Item";
+import Spinner from "react-bootstrap/Spinner";
 
 export default function All() {
   const [items, setItems] = useState([{}]);
+  const [showSpinner, setShowSpinner] = useState(true);
 
   useEffect(() => {
     ItemDataService.retrieve("http://localhost:8000/items/")
       .then((data) => {
         setItems(data);
+        setShowSpinner(false);
       })
       .catch((err) => {
         console.log(err);
@@ -22,6 +25,17 @@ export default function All() {
     // how to make error render slower/carousel run faster? hm
     // TODO: refactor and style so that div can be removed
     <div style={{ marginTop: 50 }}>
+      {/* spinner does not have HIDE prop. find a less verbose way to show */}
+      {/* spinner works, but delay is on carousel side */}
+      {/* TODO: find how to improve carousel loading time */}
+      {showSpinner ? (
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      ) : (
+        ""
+      )}
+
       <Container>
         <Row>
           <Carousel fade>
