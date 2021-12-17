@@ -8,14 +8,18 @@ import Form from "react-bootstrap/Form";
 import ItemDataService from "../services/ItemDataService";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import Toast from "react-bootstrap/Toast";
+import Modal from "react-bootstrap/Modal";
 
 function Edit() {
   const [item, setItem] = useState({});
   const [showToast, setShowToast] = useState(false);
-
   const [success, setSuccess] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
 
   useEffect(() => {
     ItemDataService.retrieve(`http://localhost:8000/items/${id}`)
@@ -85,6 +89,7 @@ function Edit() {
           </Toast>
         </Col>
       </Row>
+
       {/* TODO: fix placement of card */}
       <Container className="d-flex vh-100">
         <Row className="m-auto align-self-center">
@@ -176,13 +181,13 @@ function Edit() {
                       </Button>
                     </Col>
                     <Col>
-                      <Button variant="danger" onClick={deleteItem}>
+                      <Button variant="danger" onClick={handleShow}>
                         Delete
                       </Button>
                     </Col>
                     <Col>
                       <Link to={"/"} className="btn-custom">
-                        <Button variant="light">Back</Button>
+                        <Button variant="secondary">Back</Button>
                       </Link>
                     </Col>
                   </Row>
@@ -191,6 +196,24 @@ function Edit() {
             </Card>
           </Col>
         </Row>
+
+        <Modal show={showModal} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Confirm delete?</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Are you sure you want to delete <b>{item.itemName} </b>from{" "}
+            <b>{item.shopName}</b>?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Back
+            </Button>
+            <Button variant="danger" onClick={deleteItem}>
+              Yes, delete
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </Container>
     </Container>
   );
