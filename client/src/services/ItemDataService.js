@@ -28,6 +28,19 @@ class ItemDataService {
     return response;
   }
 
+  async delete(url = "") {
+    const response = await fetch(url, {
+      method: "DELETE",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+    });
+    return response;
+  }
+
   // retrieve() {
   //   return axios.get("/items");
   // }

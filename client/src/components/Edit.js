@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import ItemDataService from "../services/ItemDataService";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import Toast from "react-bootstrap/Toast";
 
 function Edit() {
@@ -14,6 +14,7 @@ function Edit() {
   const [show, setShow] = useState(false);
   const [success, setSuccess] = useState(false);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     ItemDataService.retrieve(`http://localhost:8000/items/${id}`)
@@ -41,6 +42,17 @@ function Edit() {
         }
       }
     );
+  };
+
+  const deleteItem = () => {
+    ItemDataService.delete(`http://localhost:8000/items/${id}`).then((res) => {
+      if (res.status === 200) {
+        alert("deleted!");
+        navigate("/");
+      } else {
+        alert("error in deleting!");
+      }
+    });
   };
 
   return (
@@ -163,15 +175,13 @@ function Edit() {
                       </Button>
                     </Col>
                     <Col>
-                      <Button variant="danger" type="">
+                      <Button variant="danger" onClick={deleteItem}>
                         Delete
                       </Button>
                     </Col>
                     <Col>
                       <Link to={"/"} className="btn-custom">
-                        <Button variant="light" type="">
-                          Back
-                        </Button>
+                        <Button variant="light">Back</Button>
                       </Link>
                     </Col>
                   </Row>
