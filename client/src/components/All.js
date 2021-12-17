@@ -20,29 +20,32 @@ export default function All() {
 
   return (
     // how to make error render slower/carousel run faster? hm
+    // TODO: refactor and style so that div can be removed
     <div style={{ marginTop: 50 }}>
       <Container>
-        <Carousel fade>
-          {items.length != 0 ? (
-            items.map((item, index) => (
-              <Carousel.Item key={index}>
-                <img
-                  className="d-block w-100"
-                  src="https://picsum.photos/400/150"
-                  alt="slide"
-                />
-                <Carousel.Caption>
-                  <Item item={item} key={index} />
-                </Carousel.Caption>
-              </Carousel.Item>
-            ))
-          ) : (
-            <div>
-              <h1>No items for sale now!</h1>
-              <p> Check back at another time ;-) </p>
-            </div>
-          )}
-        </Carousel>
+        <Row>
+          <Carousel fade>
+            {items.length !== 0 ? (
+              items.map((item, index) => (
+                <Carousel.Item key={index}>
+                  <img
+                    className="d-block w-100"
+                    src="https://picsum.photos/400/150"
+                    alt="slide"
+                  />
+                  <Carousel.Caption>
+                    <Item item={item} key={index} />
+                  </Carousel.Caption>
+                </Carousel.Item>
+              ))
+            ) : (
+              <div>
+                <h1>No items for sale now!</h1>
+                <p> Check back at another time ;-) </p>
+              </div>
+            )}
+          </Carousel>
+        </Row>
       </Container>
     </div>
   );

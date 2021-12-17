@@ -8,7 +8,7 @@ import Form from "react-bootstrap/Form";
 import ItemDataService from "../services/ItemDataService";
 import { useParams, Link, useNavigate } from "react-router-dom";
 
-function Edit(props) {
+function Edit() {
   const [item, setItem] = useState({});
   const { id } = useParams();
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ function Edit(props) {
   const submit = () => {
     ItemDataService.update(`http://localhost:8000/items/${id}`, item).then(
       (res) => {
-        if (res.status == 200) {
+        if (res.status === 200) {
           alert("Updated successfully!");
           // TODO: implement toast to show successful update, else error
           navigate("/");
@@ -109,10 +109,6 @@ function Edit(props) {
                   <Col sm={8}>
                     <Form.Select
                       aria-label="Select..."
-                      onChange={(e) => {
-                        console.log(e.target.value);
-                        console.log(item.available);
-                      }}
                       name="available"
                       value={
                         item.available === true ? "available" : "unavailable"
@@ -123,8 +119,6 @@ function Edit(props) {
                           available:
                             e.target.value === "available" ? true : false,
                         });
-                        console.log(item.available);
-                        console.log(e.target.value);
                       }}
                     >
                       <option value="available">Available</option>
