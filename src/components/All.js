@@ -7,7 +7,7 @@ import Item from "./Item";
 import Spinner from "react-bootstrap/Spinner";
 
 export default function All() {
-  const [items, setItems] = useState([{}]);
+  const [items, setItems] = useState([]);
   const [showSpinner, setShowSpinner] = useState(true);
 
   useEffect(() => {
