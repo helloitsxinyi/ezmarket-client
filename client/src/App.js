@@ -13,7 +13,7 @@ function App() {
       <nav>
         <Navbar bg="dark" variant="dark">
           <Container>
-            <Navbar.Brand href="/">FoodMarket</Navbar.Brand>
+            <Navbar.Brand href="/">EzMarket</Navbar.Brand>
             <Nav className="me-auto">
               <Nav.Link href="/add">Add Food Item</Nav.Link>
             </Nav>
