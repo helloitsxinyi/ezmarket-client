@@ -9,9 +9,10 @@ import Spinner from "react-bootstrap/Spinner";
 export default function All() {
   const [items, setItems] = useState([]);
   const [showSpinner, setShowSpinner] = useState(true);
+  const baseURL = "https://ezmarket-server.netlify.app";
 
   useEffect(() => {
-    ItemDataService.retrieve("http://localhost:8000/items/")
+    ItemDataService.retrieve(`${baseURL}/items/`)
       .then((data) => {
         setItems(data);
         setShowSpinner(false);
