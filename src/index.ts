@@ -22,8 +22,4 @@ const model = new EzModel("Items", {
 
 app.addApp(model, { prefix: "/items" });
 
-// app.get("/", async (req,res) => {
-//   return {data: "data"}
-// });
-
 app.start();
