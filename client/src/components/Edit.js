@@ -76,7 +76,7 @@ function Edit() {
             >
               <Card.Body>
                 <Card.Title>
-                  Editing {item.itemName} from {item.shopName}
+                  Editing <b>{item.itemName}</b> from <b>{item.shopName}</b>
                 </Card.Title>
                 {/* TODO: align text to left */}
                 <Card.Header className="align-left">
