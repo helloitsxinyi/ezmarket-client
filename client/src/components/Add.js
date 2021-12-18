@@ -13,11 +13,15 @@ function Add() {
   const [item, setItem] = useState({});
   const [showToast, setShowToast] = useState(false);
   const [success, setSuccess] = useState(false);
-  const { id } = useParams();
 
   useEffect(() => {
-    setItem({ ...item, shopName: "(Shop)", itemName: "(Item)" });
-  }, [id]);
+    setItem({
+      ...item,
+      shopName: "(Shop)",
+      itemName: "(Item)",
+      available: true,
+    });
+  }, []);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -25,6 +29,7 @@ function Add() {
   };
 
   const submit = () => {
+    console.log(item);
     ItemDataService.add(`http://localhost:8000/items/`, item).then((res) => {
       setShowToast(true);
       if (res.status === 200) {
@@ -104,19 +109,10 @@ function Add() {
                       <Form.Select
                         aria-label="Select..."
                         name="available"
-                        value={
-                          item.available === true ? "available" : "unavailable"
-                        }
-                        onChange={(e) => {
-                          setItem({
-                            ...item,
-                            available:
-                              e.target.value === "available" ? true : false,
-                          });
-                        }}
+                        value="available"
+                        disabled={true}
                       >
-                        <option value="available">Available</option>
-                        <option value="unavailable">Unavailable</option>
+                        <option value="available">Available (default)</option>
                       </Form.Select>
                     </Col>
                   </Form.Group>
