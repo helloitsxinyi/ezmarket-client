@@ -9,7 +9,8 @@ import Spinner from "react-bootstrap/Spinner";
 export default function All() {
   const [items, setItems] = useState([]);
   const [showSpinner, setShowSpinner] = useState(true);
-  const baseURL = "https://ezmarket-server.netlify.app";
+  // TODO: change to env BASEURL later
+  const baseURL = "https://localhost:8000/";
 
   useEffect(() => {
     ItemDataService.retrieve(`${baseURL}/items/`)

@@ -6,6 +6,7 @@ import { Route, Routes } from "react-router-dom";
 import All from "./components/All";
 import Edit from "./components/Edit";
 import Add from "./components/Add";
+import Button from "react-bootstrap/Button";
 
 function App() {
   return (
@@ -16,6 +17,12 @@ function App() {
             <Navbar.Brand href="/">EzMarket</Navbar.Brand>
             <Nav className="me-auto">
               <Nav.Link href="/add">Add Food Item</Nav.Link>
+            </Nav>
+            <Nav className="ml-auto">
+              {/* TODO: change to process env url later */}
+              <Button href={`https://localhost:8000/user/auth/google/login`}>
+                Login
+              </Button>
             </Nav>
           </Container>
         </Navbar>
