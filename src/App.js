@@ -18,12 +18,6 @@ function App() {
             <Nav className="me-auto">
               <Nav.Link href="/add">Add Food Item</Nav.Link>
             </Nav>
-            <Nav className="ml-auto">
-              {/* TODO: change to process env url later */}
-              <Button href={`https://localhost:8000/user/auth/google/login`}>
-                Login
-              </Button>
-            </Nav>
           </Container>
         </Navbar>
       </nav>
