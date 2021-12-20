@@ -6,13 +6,19 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import ItemDataService from "../services/ItemDataService";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Modal from "react-bootstrap/Modal";
 import Toast from "react-bootstrap/Toast";
 
 function Add() {
   const [item, setItem] = useState({});
   const [showToast, setShowToast] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
 
   useEffect(() => {
     setItem({
@@ -30,23 +36,21 @@ function Add() {
 
   const submit = () => {
     console.log(item);
-    ItemDataService.add(`${process.env.REACT_APP_API_URL}/items/`, item).then(
-      (res) => {
-        setShowToast(true);
+    ItemDataService.add(`${process.env.REACT_APP_API_URL}/items/`, item)
+      .then((res) => {
         if (res.status === 200) {
-          setSuccess(true);
-        } else {
-          setSuccess(false);
+          navigate("/");
         }
-      }
-    );
+      })
+      .catch((err) => {
+        setSuccess(false);
+        handleClose();
+        setShowToast(true);
+      });
   };
 
   return (
-    // TOAST
-    // TODO: stack toasts
-    // see: https://react-bootstrap.github.io/components/toasts/#toast-props
-    <Container>
+    <div>
       <Container className="d-flex">
         <Row className="m-auto align-self-center">
           <Col>
@@ -60,7 +64,6 @@ function Add() {
                 <Card.Title>
                   Adding <b>{item.itemName}</b> from <b>{item.shopName}</b>
                 </Card.Title>
-                {/* TODO: align text to left */}
                 <Card.Header className="align-left">
                   <Form.Group as={Row} className="mb-3" controlId="shopName">
                     <Form.Label column sm={3}>
@@ -120,8 +123,11 @@ function Add() {
                   </Form.Group>
                   <Row>
                     <Col>
-                      {/* TODO: fix button position */}
-                      <Button variant="primary" type="submit" onClick={submit}>
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        onClick={handleShow}
+                      >
                         Submit
                       </Button>
                     </Col>
@@ -137,31 +143,42 @@ function Add() {
           </Col>
         </Row>
       </Container>
-      <Row>
-        <Col xs={6}>
-          <Toast
-            onClose={() => setShowToast(false)}
-            show={showToast}
-            delay={3000}
-            autohide
-            bg={success ? "success" : "danger"}
-            style={{ position: "absolute", right: "1rem", top: "1rem" }}
-          >
-            <Toast.Header>
-              <strong className="me-auto">
-                {" "}
-                {success ? "Success" : "Error"}
-              </strong>
-            </Toast.Header>
-            <Toast.Body style={{ color: "white", textAlign: "left" }}>
-              {success
-                ? "Successfully added!"
-                : "There was an error processing your request! Please try again."}
-            </Toast.Body>
-          </Toast>
-        </Col>
-      </Row>
-    </Container>
+      <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm submission?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Would you like to add <b>{item.itemName} </b>from{" "}
+          <b>{item.shopName}</b>?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Back
+          </Button>
+          <Button variant="success" onClick={submit}>
+            Confirm
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Toast
+        onClose={() => setShowToast(false)}
+        show={showToast}
+        delay={3000}
+        autohide
+        bg={success ? "success" : "danger"}
+        style={{ position: "absolute", right: "1rem", top: "1rem" }}
+      >
+        <Toast.Header>
+          <strong className="me-auto"> {success ? "Success" : "Error"}</strong>
+        </Toast.Header>
+        <Toast.Body style={{ color: "white", textAlign: "left" }}>
+          {success
+            ? "Successfully updated!"
+            : "There was an error processing your request! Please try again."}
+        </Toast.Body>
+      </Toast>
+    </div>
   );
 }
 
