@@ -22,7 +22,7 @@ function Edit() {
   const handleShow = () => setShowModal(true);
 
   useEffect(() => {
-    ItemDataService.retrieve(`http://localhost:8000/items/${id}`)
+    ItemDataService.retrieve(`${process.env.REACT_APP_API_URL}/items/${id}`)
       .then((data) => {
         setItem(data);
       })
@@ -37,27 +37,30 @@ function Edit() {
   };
 
   const submit = () => {
-    ItemDataService.update(`http://localhost:8000/items/${id}`, item).then(
-      (res) => {
-        setShowToast(true);
-        if (res.status === 200) {
-          setSuccess(true);
-        } else {
-          setSuccess(false);
-        }
+    ItemDataService.update(
+      `${process.env.REACT_APP_API_URL}/items/${id}`,
+      item
+    ).then((res) => {
+      setShowToast(true);
+      if (res.status === 200) {
+        setSuccess(true);
+      } else {
+        setSuccess(false);
       }
-    );
+    });
   };
 
   const deleteItem = () => {
-    ItemDataService.delete(`http://localhost:8000/items/${id}`).then((res) => {
-      if (res.status === 200) {
-        alert("deleted!");
-        navigate("/");
-      } else {
-        alert("error in deleting!");
+    ItemDataService.delete(`${process.env.REACT_APP_API_URL}/items/${id}`).then(
+      (res) => {
+        if (res.status === 200) {
+          alert("deleted!");
+          navigate("/");
+        } else {
+          alert("error in deleting!");
+        }
       }
-    });
+    );
   };
 
   return (

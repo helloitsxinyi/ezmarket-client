@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import ItemDataService from "../services/ItemDataService";
-import { useParams, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Toast from "react-bootstrap/Toast";
 
 function Add() {
@@ -30,14 +30,16 @@ function Add() {
 
   const submit = () => {
     console.log(item);
-    ItemDataService.add(`http://localhost:8000/items/`, item).then((res) => {
-      setShowToast(true);
-      if (res.status === 200) {
-        setSuccess(true);
-      } else {
-        setSuccess(false);
+    ItemDataService.add(`${process.env.REACT_APP_API_URL}/items/`, item).then(
+      (res) => {
+        setShowToast(true);
+        if (res.status === 200) {
+          setSuccess(true);
+        } else {
+          setSuccess(false);
+        }
       }
-    });
+    );
   };
 
   return (
