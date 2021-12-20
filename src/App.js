@@ -16,7 +16,7 @@ function App() {
           <Container>
             <Navbar.Brand href="/">EzMarket</Navbar.Brand>
             <Nav className="me-auto">
-              <Nav.Link href="/add">Add Food Item</Nav.Link>
+              <Nav.Link href="/add">Add Item</Nav.Link>
             </Nav>
           </Container>
         </Navbar>
