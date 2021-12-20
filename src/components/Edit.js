@@ -54,10 +54,9 @@ function Edit() {
     ItemDataService.delete(`${process.env.REACT_APP_API_URL}/items/${id}`).then(
       (res) => {
         if (res.status === 200) {
-          alert("deleted!");
           navigate("/");
         } else {
-          alert("error in deleting!");
+          alert("Error in deleting! Please try again.");
         }
       }
     );
