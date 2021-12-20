@@ -9,11 +9,9 @@ import Spinner from "react-bootstrap/Spinner";
 export default function All() {
   const [items, setItems] = useState([]);
   const [showSpinner, setShowSpinner] = useState(true);
-  // TODO: change to env BASEURL later
-  const baseURL = "https://localhost:8000/";
 
   useEffect(() => {
-    ItemDataService.retrieve(`${baseURL}/items/`)
+    ItemDataService.retrieve(`${process.env.REACT_APP_API_URL}/items/`)
       .then((data) => {
         setItems(data);
         setShowSpinner(false);
@@ -40,27 +38,29 @@ export default function All() {
 
       <Container>
         <Row>
-          <Carousel fade>
-            {items.length !== 0 ? (
-              items.map((item, index) => (
+          {items.length !== 0 ? (
+            <Carousel fade>
+              {items.map((item, index) => (
                 <Carousel.Item key={index}>
                   <img
                     className="d-block w-100"
-                    src="https://picsum.photos/400/150"
+                    src="/images/grey_bg.png"
+                    height={500}
+                    width={400}
                     alt="slide"
                   />
                   <Carousel.Caption>
                     <Item item={item} key={index} />
                   </Carousel.Caption>
                 </Carousel.Item>
-              ))
-            ) : (
-              <div>
-                <h1>No items for sale now!</h1>
-                <p> Check back at another time ;-) </p>
-              </div>
-            )}
-          </Carousel>
+              ))}
+            </Carousel>
+          ) : (
+            <div>
+              <h1>No items for sale now!</h1>
+              <p> Check back at another time ;-) </p>
+            </div>
+          )}
         </Row>
       </Container>
     </div>
