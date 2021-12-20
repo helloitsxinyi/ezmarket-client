@@ -51,22 +51,21 @@ function Edit() {
   };
 
   const deleteItem = () => {
-    ItemDataService.delete(`${process.env.REACT_APP_API_URL}/items/${id}`).then(
-      (res) => {
+    ItemDataService.delete(`${process.env.REACT_APP_API_URL}/items/${id}`)
+      .then((res) => {
         if (res.status === 200) {
           navigate("/");
-        } else {
-          alert("Error in deleting! Please try again.");
         }
-      }
-    );
+      })
+      .catch((err) => {
+        setSuccess(false);
+        handleClose();
+        setShowToast(true);
+      });
   };
 
   return (
-    // TOAST
-    // TODO: stack toasts
-    // see: https://react-bootstrap.github.io/components/toasts/#toast-props
-    <Container>
+    <div>
       <Container className="d-flex">
         <Row className="m-auto align-self-center">
           <Col>
@@ -80,7 +79,6 @@ function Edit() {
                 <Card.Title>
                   Editing <b>{item.itemName}</b> from <b>{item.shopName}</b>
                 </Card.Title>
-                {/* TODO: align text to left */}
                 <Card.Header className="align-left">
                   <Form.Group as={Row} className="mb-3" controlId="shopName">
                     <Form.Label column sm={3}>
@@ -174,30 +172,25 @@ function Edit() {
           </Col>
         </Row>
       </Container>
-      <Row>
-        <Col xs={6}>
-          <Toast
-            onClose={() => setShowToast(false)}
-            show={showToast}
-            delay={3000}
-            autohide
-            bg={success ? "success" : "danger"}
-            style={{ position: "absolute", right: "1rem", top: "1rem" }}
-          >
-            <Toast.Header>
-              <strong className="me-auto">
-                {" "}
-                {success ? "Success" : "Error"}
-              </strong>
-            </Toast.Header>
-            <Toast.Body style={{ color: "white", textAlign: "left" }}>
-              {success
-                ? "Successfully updated!"
-                : "There was an error processing your request! Please try again."}
-            </Toast.Body>
-          </Toast>
-        </Col>
-      </Row>
+
+      <Toast
+        onClose={() => setShowToast(false)}
+        show={showToast}
+        delay={3000}
+        autohide
+        bg={success ? "success" : "danger"}
+        style={{ position: "absolute", right: "1rem", top: "1rem" }}
+      >
+        <Toast.Header>
+          <strong className="me-auto"> {success ? "Success" : "Error"}</strong>
+        </Toast.Header>
+        <Toast.Body style={{ color: "white", textAlign: "left" }}>
+          {success
+            ? "Successfully updated!"
+            : "There was an error processing your request! Please try again."}
+        </Toast.Body>
+      </Toast>
+
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Confirm delete?</Modal.Title>
@@ -215,7 +208,7 @@ function Edit() {
           </Button>
         </Modal.Footer>
       </Modal>
-    </Container>
+    </div>
   );
 }
 
