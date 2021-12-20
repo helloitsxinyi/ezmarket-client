@@ -26,9 +26,10 @@ export default function All() {
   return (
     <div style={{ marginTop: 50 }}>
       {showSpinner ? (
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
+        <div>
+          <h1>Loading...</h1>
+          <Spinner animation="border" role="status"></Spinner>
+        </div>
       ) : (
         ""
       )}
@@ -63,7 +64,6 @@ export default function All() {
         </Row>
       </Container>
 
-      {/* Toast */}
       <Toast
         onClose={() => setShowToast(false)}
         show={showToast}
