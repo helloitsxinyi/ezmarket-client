@@ -55,11 +55,13 @@ export default function All() {
                 </Carousel.Item>
               ))}
             </Carousel>
-          ) : (
+          ) : showSpinner === false ? (
             <div>
               <h1>No items for sale now!</h1>
               <p> Check back at another time ;-) </p>
             </div>
+          ) : (
+            ""
           )}
         </Row>
       </Container>
