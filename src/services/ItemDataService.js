@@ -46,9 +46,6 @@ class ItemDataService {
     const response = await fetch(url, {
       method: "DELETE",
       mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
       redirect: "follow",
       referrerPolicy: "no-referrer",
     });
